@@ -1,24 +1,30 @@
 import React from 'react';
 import './App.css';
-import Review from "./class/Review"
+import Review from "./class/Review";
+import Navigation from './class/Navigation';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      reviews: [<Review title = "mewqmeqwmwqmewqmewqdsksnksdjnfafjlflfaafll" text = "23213" />],
+      reviews: [
+        {title: "mewqmeqwmwqmewqmewqdsksnksdjnfafjlflfaafll", text: '23213'},
+      ],
       display: 'home',
       filters: [],
     };
   }
 
   render() {
-    const reviewItems = this.state.reviews.map((d) => d)
+    const reviewItems = this.state.reviews.map((d) => <Review title={d.title} text={d.text} />)
     console.log(reviewItems);
     return (
       <div>
-        {reviewItems}
+        <div>{Navigation()}</div>
+        <div>
+          {reviewItems}
+        </div>
       </div>
     );
   }
