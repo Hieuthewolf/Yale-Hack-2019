@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class Review extends React.Component {
@@ -38,7 +37,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='header'>JetBlue Reviews</div>
+      <div>
+        <div className='header'>JetBlue Reviews</div>
+        <div>{this.state.reviews}</div>
+      </div>
     );
   }
 }
