@@ -15,14 +15,16 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      reviews: [<Review title = "mewqmeqwmwqmewqmewqdsksnksdjnfafjlflfaafll" text = "23213" />],
+      reviews: [
+        {title:'Sophia age 18', text:'looking for single men in her area'}
+      ],
       display: 'home',
       filters: [],
     };
   }
 
   render() {
-    const reviewItems = this.state.reviews.map((d) => d)
+    const reviewItems = this.state.reviews.map((d) => <Review title={d.title} text={d.text} />)
     console.log(reviewItems);
     return (
       <HashRouter>
