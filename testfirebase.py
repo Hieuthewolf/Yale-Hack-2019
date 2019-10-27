@@ -25,7 +25,7 @@ class Solution:
 		print("running perc")
 		self.run_perc()
 		print(self.theta_avg, self.theta_0_avg)
-		self.give_top_bottom_k(10)
+		self.give_top_bottom_k(50)
 	def make_frequency_list(self):
 		# Add a new user under /users.
 		# for i in root.child('reviews'):
@@ -51,11 +51,10 @@ class Solution:
 					wordified = word.lower()
 					if wordified not in stop_words:
 						self.word_freq[wordified] += 1
-		#print(self.word_freq)
 		#get rid of words w freq less than 10
 		self.new_freq = {}
 		for word in self.word_freq:
-			if self.word_freq[word]>=100: #can change this later
+			if self.word_freq[word]>=75: #can change this later
 				self.new_freq[word]=self.word_freq[word]
 		self.word_freq = self.new_freq 
 
@@ -93,7 +92,7 @@ class Solution:
 		labels = np.array([self.labels])
 		#print(W[0:10,:],labels[:,0:10])
 		#print(W.shape,labels.shape)
-		self.averaged_perceptron(W,labels,100)
+		self.averaged_perceptron(W,labels,200)
 	def averaged_perceptron(self, data, labels, params = None):
 	  def positive(x, th, th0):
 	    return np.sign(th.T@x + th0)
@@ -126,8 +125,8 @@ class Solution:
 		top_k = []
 		bottom_k = []
 		for i in range(k):
-			top_k.append(self.bag_of_words[self.theta_avg[i][1]])
-			bottom_k.append(self.bag_of_words[self.theta_avg[-(i+1)][1]])
+			top_k.append((self.bag_of_words[self.theta_avg[i][1]],self.theta_avg[i][0][0]))
+			bottom_k.append((self.bag_of_words[self.theta_avg[-(i+1)][1]],self.theta_avg[-(i+1)][0][0]))
 		print(top_k,bottom_k)
 test = Solution()
 
