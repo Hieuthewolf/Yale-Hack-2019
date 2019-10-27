@@ -111,11 +111,11 @@ features = [('cylinders', hw3.raw),
 
 
 # auto_data, auto_labels = hw3.auto_data_and_labels(auto_data_all, features)
-T = [1,10,50]
-def evaluate(Ts, data, labels):
-    for t in Ts:
-        print(t, hw3.xval_learning_alg(lambda data, labels: hw3.perceptron(data, labels, {"T": t}), data, labels, k=10))
-        print(t, hw3.xval_learning_alg(lambda data, labels: hw3.averaged_perceptron(data, labels, {"T": t}), data, labels, k=10))
+# T = [1,10,50]
+# def evaluate(Ts, data, labels):
+#     for t in Ts:
+#         print(t, hw3.xval_learning_alg(lambda data, labels: hw3.perceptron(data, labels, {"T": t}), data, labels, k=10))
+#         print(t, hw3.xval_learning_alg(lambda data, labels: hw3.averaged_perceptron(data, labels, {"T": t}), data, labels, k=10))
 # evaluate(T,auto_data,auto_labels)
 
 #[cylinders=one_hot, displacement=standard, horsepower=standard, weight=standard, acceleration=standard, origin=one_hot]
@@ -154,14 +154,16 @@ all_words = hw3.reverse_dict(dictionary)
 # The standard data arrays for the bag of words
 review_bow_data = hw3.extract_bow_feature_vectors(review_texts, dictionary)
 review_labels = hw3.rv(review_label_list)
+print(review_labels[:,0:100])
 print('review_bow_data and labels shape', review_bow_data.shape, review_labels.shape)
 
 #-------------------------------------------------------------------------------
 # Analyze review data
 #-------------------------------------------------------------------------------
 
-# #evaluate(T, review_bow_data, review_labels)
-# result = hw3.averaged_perceptron(review_bow_data,review_labels,params={'T':10})
+#evaluate(T, review_bow_data, review_labels)
+
+#result = hw3.averaged_perceptron(review_bow_data,review_labels,params={'T':10})
 # #print(result[0])
 # indices = np.argsort(result[0],axis=0)[:10]
 # print(indices)
@@ -189,20 +191,20 @@ Returns a dictionary formatted as follows:
 Where labels range from 0 to 9 and (m, n) images are represented
 by arrays of floats from 0 to 1
 """
-mnist_data_all = hw3.load_mnist_data(range(10))
+# mnist_data_all = hw3.load_mnist_data(range(10))
 
-print('mnist_data_all loaded. shape of single images is', mnist_data_all[0]["images"][0].shape)
+# print('mnist_data_all loaded. shape of single images is', mnist_data_all[0]["images"][0].shape)
 
-# HINT: change the [0] and [1] if you want to access different images
-d0 = mnist_data_all[9]["images"]
-d1 = mnist_data_all[0]["images"]
-y0 = np.repeat(-1, len(d0)).reshape(1,-1)
-y1 = np.repeat(1, len(d1)).reshape(1,-1)
+# # HINT: change the [0] and [1] if you want to access different images
+# d0 = mnist_data_all[9]["images"]
+# d1 = mnist_data_all[0]["images"]
+# y0 = np.repeat(-1, len(d0)).reshape(1,-1)
+# y1 = np.repeat(1, len(d1)).reshape(1,-1)
 
-# data goes into the feature computation functions
-data = np.vstack((d0, d1))
-# labels can directly go into the perceptron algorithm
-labels = np.vstack((y0.T, y1.T)).T
+# # data goes into the feature computation functions
+# data = np.vstack((d0, d1))
+# # labels can directly go into the perceptron algorithm
+# labels = np.vstack((y0.T, y1.T)).T
 
 
 
