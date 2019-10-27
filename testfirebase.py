@@ -25,6 +25,7 @@ class Solution:
 		print("running perc")
 		self.run_perc()
 		print(self.theta_avg, self.theta_0_avg)
+		self.give_top_bottom_k(10)
 	def make_frequency_list(self):
 		# Add a new user under /users.
 		# for i in root.child('reviews'):
@@ -116,7 +117,18 @@ class Solution:
 	  theta_avg = theta_sum / (T*n)
 	  theta_0_avg = theta_0_sum / (T*n)
 	  self.theta_avg, self.theta_0_avg = theta_avg,theta_0_avg
-
+	def give_top_bottom_k(self,k):
+		result = []
+		for index in range(self.theta_avg.shape[0]):
+			result.append([self.theta_avg[index:index+1][0],index])
+		self.theta_avg = sorted(result, key=lambda x: x[0])
+		print(self.theta_avg)
+		top_k = []
+		bottom_k = []
+		for i in range(k):
+			top_k.append(self.bag_of_words[self.theta_avg[i][1]])
+			bottom_k.append(self.bag_of_words[self.theta_avg[-(i+1)][1]])
+		print(top_k,bottom_k)
 test = Solution()
 
 
