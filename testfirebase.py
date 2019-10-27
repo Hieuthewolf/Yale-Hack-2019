@@ -23,8 +23,9 @@ whitelist = set('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 stop_words = set(stopwords.words('english'))
 stop_words.add("the")
 stop_words.add("i")
+stop_words.add("us")
 
-print(stop_words)
+stop_words = {word.lower() for word in stop_words}
 
 for review in review_dict.values():
     text_string = review['text']
@@ -33,10 +34,11 @@ for review in review_dict.values():
     text_list = text_string.split(' ')
 
     for word in text_list:
-        if word not in stop_words:
-            word_freq[word.lower()] += 1
+        wordified = word.lower()
+        if wordified not in stop_words:
+            word_freq[wordified] += 1
 
-# print(word_freq)
+print(word_freq)
 
 
 # snapshot = ref.order_by_child("rating").get()
