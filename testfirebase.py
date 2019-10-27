@@ -15,7 +15,7 @@ class Solution:
 		cred = credentials.Certificate(('C:/Users/Umarbek Nasimov/Desktop/yhack.json'))
 		firebase_admin.initialize_app(cred, {'databaseURL' : 'https://yhack-cb990.firebaseio.com/'})
 
-		self.ref = db.reference('reviews')
+		self.ref = db.reference('southreviews')
 		self.data = []
 		self.labels = []
 		self.make_frequency_list()
@@ -41,9 +41,10 @@ class Solution:
 		stop_words.add("")
 
 		stop_words = {word.lower() for word in stop_words}
+		print("this is length " + str(len(self.review_dict)))
 		# bag_of_words = set()
 		for review in self.review_dict.values():
-			if int(review['rating'])<=2 or int(review['rating'])>=4:
+			if int(review['rating'])<=1 or int(review['rating'])>=5:
 				text_string = review['text']
 				text_string = ''.join(filter(whitelist.__contains__, text_string))
 				text_list = text_string.split(' ')
@@ -60,7 +61,7 @@ class Solution:
 
 		#print(self.word_freq)
 		for review in self.review_dict.values():
-			if int(review['rating'])<=2 or int(review['rating'])>=4:
+			if int(review['rating'])<=1 or int(review['rating'])>=5:
 				temp_words = set()
 				text_string = review['text']
 				text_string = ''.join(filter(whitelist.__contains__, text_string))
@@ -92,7 +93,7 @@ class Solution:
 		labels = np.array([self.labels])
 		#print(W[0:10,:],labels[:,0:10])
 		#print(W.shape,labels.shape)
-		self.averaged_perceptron(W,labels,200)
+		self.averaged_perceptron(W,labels,100) #200
 	def averaged_perceptron(self, data, labels, params = None):
 	  def positive(x, th, th0):
 	    return np.sign(th.T@x + th0)
@@ -126,8 +127,10 @@ class Solution:
 		bottom_k = []
 		for i in range(k):
 			top_k.append((self.bag_of_words[self.theta_avg[i][1]],self.theta_avg[i][0][0]))
+			print((self.bag_of_words[self.theta_avg[i][1]],self.theta_avg[i][0][0]))
 			bottom_k.append((self.bag_of_words[self.theta_avg[-(i+1)][1]],self.theta_avg[-(i+1)][0][0]))
-		print(top_k,bottom_k)
+			#print((self.bag_of_words[self.theta_avg[-(i+1)][1]],self.theta_avg[-(i+1)][0][0]))
+		#print(top_k,bottom_k)
 test = Solution()
 
 
