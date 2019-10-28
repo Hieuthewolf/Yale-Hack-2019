@@ -21,6 +21,8 @@ from nltk.corpus import stopwords
 
 from collections import Counter
 
+import pprint
+
 class Solution:
     def __init__(self):
         cred = credentials.Certificate(('./yhack.json'))
@@ -41,7 +43,9 @@ class Solution:
         self.sorted_avg_list = []
 
     def make_frequency_dict(self):
+        print("before: ")
         review_dict = self.ref.get()
+
         whitelist = set('abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 
         stop_words = set(stopwords.words('english'))
@@ -79,6 +83,7 @@ class Solution:
                     self.word_to_avg_rating_mapping[word] = (total_rating + rating, total_num_reviews + 1)
 
     def make_relevant_word_rating_dict(self):
+        print("starting making relevant word rating dict")
         for word, avg_rating_tuple in self.word_to_avg_rating_mapping.items():
             total_word_ratings = avg_rating_tuple[0]
             total_text_occurence = avg_rating_tuple[1]
@@ -86,6 +91,8 @@ class Solution:
                 self.relevant_word_rating_mapping[word] = total_word_ratings / total_text_occurence
         
         self.sorted_avg_list = sorted(list(self.relevant_word_rating_mapping.items()), key = lambda x: x[1])
+        print("done making relevant word rating dict")
+
         
     def get_frequency_dict(self):
         return self.word_freq
@@ -100,11 +107,11 @@ class Solution:
         return self.relevant_word_rating_mapping
 
     def get_top_rated_words(self):
-        last_idx = len(self.sorted_avg_list) - 50
+        last_idx = len(self.sorted_avg_list) - 30
         return self.sorted_avg_list[last_idx:]
 
     def get_lowest_rated_words(self):
-        return self.sorted_avg_list[:50]
+        return self.sorted_avg_list[:30]
 
 if __name__ == "__main__":
     solution = Solution()
@@ -120,8 +127,10 @@ if __name__ == "__main__":
     top_rated = solution.get_top_rated_words()
     bottom_rated = solution.get_lowest_rated_words()
 
-    print(top_rated)
-    print(bottom_rated)
+    pp = pprint.PrettyPrinter(width = 900)
+    pp.pprint(sorted(top_rated, key = lambda x: x[1], reverse = True))
+    print("\n")
+    pp.pprint(sorted(bottom_rated, key = lambda x: x[1], reverse = True))
 
 
 

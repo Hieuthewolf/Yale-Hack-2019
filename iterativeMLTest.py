@@ -28,7 +28,7 @@ class Solution:
         cred = credentials.Certificate(('./yhack.json'))
         firebase_admin.initialize_app(cred, {'databaseURL' : 'https://yhack-cb990.firebaseio.com/'})
 
-        self.ref = db.reference('reviews')
+        self.ref = db.reference('southreviews')
 
         self.all_possible_words = [] # Contains all possible valid words that are nouns and adjectives in review
         self.reviews = [] # Contains a list of (review, pos/neg rating) tuples
@@ -148,7 +148,7 @@ class Solution:
         return self.word_feature_sets
 
     def build_word_sentiment_counter(self):
-        for review in db.reference('reviews').get().values():
+        for review in db.reference('southreviews').get().values():
             # Retrieve text from review and do preprocessing regex
             text_string = review['text']
             clean_text = re.sub(r'[^(a-zA-Z)\s]', '', text_string)
